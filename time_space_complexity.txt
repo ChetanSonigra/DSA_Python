@@ -1,0 +1,6 @@
+Time Complexity: how many operations as n grows.
+Space Complexity: how much space required as n grows.
+n = number of element of a list (example)
+
+O(1)<O(logn)<O(n)<O(nlogn)<O(N^2)<O(2^N)<O(N!)
+
