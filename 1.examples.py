@@ -128,3 +128,137 @@ def isSubsequence(s: str, t: str) -> bool:
             return False
         i = t.find(x,i) + 1
     return True
+
+
+
+"""
+
+Best time to buy stock: 
+
+
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+ 
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
+
+"""
+
+# brute force approach: O(n^2)
+
+def maxProfit(prices: list[int]) -> int:
+    k = len(prices)
+    max_profit = 0
+    for i in range(k):
+        for j in range(i+1,k):
+            if prices[j]-prices[i]>max_profit:
+                max_profit = prices[j] - prices[i]
+    return max_profit
+
+print(maxProfit([7,1,5,3,6,4]))
+print(maxProfit([7,6,4,3,1]))
+
+
+# better 2 pointer approach. O(n)
+
+def maxProfit(prices: list[int])->int:
+    min_price = float('inf')
+    max_profit = 0
+
+    for price in prices:
+        if price < min_price:
+            min_price = price
+        
+        profit = price - min_price
+        if profit>max_profit:
+            max_profit = profit
+    return max_profit
+
+print(maxProfit([7,1,5,3,6,4]))
+print(maxProfit([7,6,4,3,1]))
+
+
+"""
+Longest common prefix:
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+ 
+
+Constraints:
+
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lowercase English letters.
+"""
+
+def longest_common_prefix(strs: list[str]) -> str:
+    s = strs[0]
+    n = len(s)
+    i = 0
+    lcp = ""
+    for i in range(n):
+        if all(s[i]==st[i] for st in strs):
+            lcp += s[i]
+        else: break
+    return lcp
+
+print(longest_common_prefix(["flower","flow","flight"]))
+print(longest_common_prefix(["dog","racecar","car"]))
+
+# this doesn't include edge cases like min length string outbound index.
+
+# O(n*m)
+def longest_common_prefix(strs: list[str])-> str:
+    n = float('inf')
+
+    for s in strs:
+        if len(s)<n:
+            n = len(s)
+        
+    i = 0
+    while i<n:
+        for s in strs:
+            if s[i] != strs[0][i]:
+                return s[:i]
+        i+= 1
+
+    return s[:i]
+
+print(longest_common_prefix(["flower","flow","flight"]))
+print(longest_common_prefix(["dog","racecar","car"]))
+print(longest_common_prefix(["a"]))
+print(longest_common_prefix([""]))
